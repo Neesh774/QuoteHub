@@ -1,36 +1,41 @@
 <script>
-	import {supabase} from "../supabaseClient";
-	
+	import { supabase } from '../supabaseClient';
+
 	let date = new Date().toLocaleDateString('en-CA');
-	let author = "";
-	let quote = "";
+	let author = '';
+	let quote = '';
 
 	async function submit() {
 		const formatted = new Date(date).getMilliseconds;
 		const newQuote = {
 			date: formatted,
-			author, quote
-		}
-		if(date.length < 1 || author.length < 1 || quote.length < 1) {
-			alert("Please fill out all fields");
+			author: author.trim(),
+			quote: quote.trim()
+		};
+		if (date.length < 1 || author.length < 1 || quote.length < 1) {
+			alert('Please fill out all fields');
 			return;
 		}
 		const { data, error } = await supabase.from('quotes').insert(newQuote);
-		alert("Success!");
+		alert('Success!');
 	}
 </script>
 
 <div class="createQuote">
 	<form>
 		<div class="textAreaWrap quote">
-			<textarea bind:value={quote} placeholder="I'm not superstitious, but I'm a little stitious" />
+			<textarea
+				maxlength={200}
+				bind:value={quote}
+				placeholder="I'm not superstitious, but I'm a little stitious"
+			/>
 		</div>
 		<div class="details">
 			<div class="calendar">
 				<input type="date" bind:value={date} />
 			</div>
 			<div class="inputWrap author">
-				<input bind:value={author} placeholder="Michael Scott" />
+				<input maxlength={30} bind:value={author} placeholder="Michael Scott" />
 			</div>
 		</div>
 		<div class="submit">
@@ -40,7 +45,6 @@
 </div>
 
 <style>
-
 	.details {
 		display: flex;
 		justify-content: space-between;
@@ -48,11 +52,10 @@
 	}
 
 	.textAreaWrap {
-		position: relative;
 		padding: 7px 0;
 		border-radius: 8px;
 		background-color: var(--inputBackgroundColor);
-		height: 64px;
+		min-height: 104px;
 		width: 500px;
 	}
 
@@ -76,7 +79,7 @@
 
 	textarea {
 		width: 100%;
-		height: 100%;
+		min-height: 104px;
 		font-family: var(--default-font);
 		line-height: var(--line-height);
 		font-size: var(--type-size);
@@ -84,9 +87,6 @@
 		outline: none;
 		color: var(--grey1);
 		resize: none;
-		position: absolute;
-		top: 8px;
-		left: 0;
 		opacity: 1;
 		background-color: transparent;
 		padding: 0 12px;
@@ -135,5 +135,23 @@
 		align-items: center;
 		white-space: nowrap;
 		cursor: pointer;
+	}
+
+	@media screen and (max-width: 768px) {
+		.textAreaWrap {
+			width: 100%;
+		}
+		.details {
+			flex-direction: column;
+		}
+		.calendar {
+			margin-top: 12px;
+		}
+		.inputWrap {
+			margin-top: 12px;
+		}
+		.submit {
+			margin-top: 12px;
+		}
 	}
 </style>

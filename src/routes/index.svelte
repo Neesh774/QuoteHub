@@ -1,17 +1,16 @@
 <script>
 	import CreateQuote from '../components/CreateQuote.svelte';
 	import NavBar from '../components/NavBar.svelte';
-	import Quotes from '../components/Quotes.svelte';
-
-	let createQuoteSelected = true;
+	import { navigating } from '$app/stores';
+	import Loading from '../assets/loading.svg';
 </script>
 
-<NavBar bind:createQuoteSelected />
+<NavBar createQuoteSelected={true} />
 <div class="container">
-	{#if createQuoteSelected}
-		<CreateQuote />
+	{#if $navigating}
+		<img src={Loading} class="loading" alt="loading" />
 	{:else}
-		<Quotes />
+		<CreateQuote />
 	{/if}
 </div>
 
@@ -61,5 +60,11 @@
 		align-items: center;
 		background: var(--backgroundColor);
 		flex: 1 1 auto;
+	}
+
+	.loading {
+		margin: 0 auto;
+		max-width: 100px;
+		max-height: 100px;
 	}
 </style>

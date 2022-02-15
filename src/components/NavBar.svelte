@@ -1,9 +1,16 @@
 <script>
+	import Favicon from '../assets/favicon.png';
 	export let createQuoteSelected = true;
+	import { goto } from '$app/navigation';
+	import Create from '../assets/create.svg';
+	import Quotes from '../assets/quotes.svg';
 </script>
 
-<div class="navbar">
-	<h1>QuoteHub</h1>
+<nav class="navbar">
+	<div class="brand">
+		<img src={Favicon} alt="Favicon" />
+		<h1>QuoteHub</h1>
+	</div>
 	{#if !createQuoteSelected}
 		<div class="inputWrap">
 			<input class="search" placeholder="Search..." />
@@ -13,23 +20,37 @@
 		<button
 			class={`tab ${createQuoteSelected ? 'selected' : ''}`}
 			id="createQuoteTab"
-			on:click={() => (createQuoteSelected = true)}>Create</button
+			on:click={() => goto('/', { replaceState: true })}>Create</button
 		>
 		<button
 			class={`tab ${!createQuoteSelected ? 'selected' : ''}`}
 			id="viewQuotesTab"
-			on:click={() => (createQuoteSelected = false)}>View</button
+			on:click={() => goto('/quotes', { replaceState: true })}>View</button
 		>
 	</div>
-</div>
+	<div class="tabs-mobile">
+		{#if !createQuoteSelected}
+			<button class="tab-mobile" id="createQuoteTab" on:click={() => goto('/', { replaceState: true })}>
+				<img src={Create} alt="Create" />
+			</button>
+		{:else}
+			<button
+				class="tab-mobile"
+				id="viewQuotesTab"
+				on:click={() => goto('/quotes', { replaceState: true })}
+			>
+				<img src={Quotes} alt="Quotes" />
+			</button>
+		{/if}
+	</div>
+</nav>
 
 <style>
 	.navbar {
 		background-color: #f2f2f2;
 		height: 50px;
 		width: 100%;
-		position: fixed;
-		top: 10px;
+		top: 5px;
 		left: 0;
 		z-index: 1;
 		display: flex;
@@ -37,6 +58,18 @@
 		align-items: center;
 		background: transparent;
 		padding: 0 20px;
+	}
+
+	.brand {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.brand img {
+		height: 40px;
+		width: 40px;
+		margin-right: 10px;
 	}
 
 	h1 {
@@ -64,6 +97,9 @@
 		color: white;
 		margin: 0 4px;
 	}
+    .tabs-mobile {
+        display: none;
+    }
 
 	.tab:hover {
 		background-color: var(--grey4);
@@ -73,8 +109,8 @@
 		background-color: var(--grey4);
 	}
 
-    .inputWrap {
-        position: relative;
+	.inputWrap {
+		position: relative;
 		display: flex;
 		flex-direction: row;
 		height: 36px;
@@ -82,10 +118,11 @@
 		border-radius: 8px;
 		align-items: center;
 		padding: 0 12px;
-    }
+		margin: 0 6px;
+	}
 
-    input {
-        width: 100%;
+	input {
+		width: 100%;
 		height: 36px;
 		font-family: var(--default-font);
 		font-size: var(--type-size);
@@ -95,5 +132,45 @@
 		color: var(--grey1);
 		background-color: transparent;
 		transition: box-shadow 0.2s ease;
-    }
+	}
+
+	@media screen and (max-width: 600px) {
+		.brand h1 {
+			display: none;
+		}
+
+        .tabs {
+            display: none;
+        }
+
+        .tabs-mobile {
+            display: block;
+            fill: white;
+            height: 36px;
+            width: 36px;
+        }
+
+        .tab-mobile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            width: 36px;
+            border-radius: 8px;
+            background: var(--grey5);
+            color: white;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .tab-mobile img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .navbar {
+            padding: 0 10px;
+        }
+	}
 </style>
