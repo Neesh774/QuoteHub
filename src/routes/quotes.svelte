@@ -101,7 +101,7 @@
 		padding: 0 4rem;
 		max-width: 100%;
 		overflow-y: auto;
-		height: calc(100vh - 70px);
+		height: calc(100vh - 80px);
 		margin-top: 70px;
 		margin: 70px auto 0;
 	}
