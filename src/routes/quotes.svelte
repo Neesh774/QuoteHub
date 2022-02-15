@@ -101,7 +101,7 @@
 		padding: 0 4rem;
 		max-width: 100%;
 		overflow-y: auto;
-		height: calc(100vh - 80px);
+		height: calc(100vh - 70px);
 		margin-top: 70px;
 		margin: 70px auto 0;
 	}
@@ -110,15 +110,7 @@
 		column-count: 3;
 		column-gap: 1.3rem;
 	}
-	@media screen and (min-width: 2560px) {
-		.quotes {
-			padding: 0 6rem;
-		}
-		.quotes-container {
-			column-count: 5;
-		}
-	}
-	@media screen and (max-width: 1024px) {
+	@media screen and (max-width: 761px) {
 		.quotes {
 			padding: 0 2rem;
 		}
@@ -127,7 +119,7 @@
 		}
 	}
 
-	@media screen and (max-width: 425px) {
+	@media screen and (max-width: 600px) {
 		.quotes {
 			padding: 0 0.5rem;
 		}
