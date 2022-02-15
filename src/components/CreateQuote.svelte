@@ -23,19 +23,34 @@
 
 <div class="createQuote">
 	<form>
-		<div class="textAreaWrap quote">
-			<textarea
-				maxlength={200}
-				bind:value={quote}
-				placeholder="I'm not superstitious, but I'm a little stitious"
-			/>
+		<div class="input">
+			<div class="label">
+				<label for="textarea">Quote</label>
+			</div>
+			<div class="textAreaWrap quote">
+				<textarea
+					maxlength={200}
+					bind:value={quote}
+					placeholder="I'm not superstitious, but I'm a little stitious"
+				/>
+			</div>
 		</div>
 		<div class="details">
-			<div class="calendar">
-				<input type="date" bind:value={date} />
+			<div class="input">
+				<div class="label">
+					<label for=".calendar">Date</label>
+				</div>
+				<div class="calendar">
+					<input type="date" bind:value={date} />
+				</div>
 			</div>
-			<div class="inputWrap author">
-				<input maxlength={30} bind:value={author} placeholder="Michael Scott" />
+			<div class="input">
+				<div class="label">
+					<label for=".author">Quotee</label>
+				</div>
+				<div class="inputWrap author">
+					<input maxlength={30} bind:value={author} placeholder="Michael Scott" />
+				</div>
 			</div>
 		</div>
 		<div class="submit">
@@ -68,6 +83,20 @@
 		border-radius: 8px;
 		align-items: center;
 		padding: 0 12px;
+	}
+
+	.label {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		margin-bottom: 2px;
+		font-family: var(--default-font);
+	}
+
+	label {
+		font-size: var(--secondary-type-size);
+		color: var(--grey2);
+		display: block;
 	}
 
 	.calendar {
