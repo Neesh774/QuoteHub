@@ -98,11 +98,42 @@
 	}
 
 	.quotes {
-		padding: 0 2rem;
+		padding: 0 4rem;
 		max-width: 100%;
 		overflow-y: auto;
 		height: calc(100vh - 70px);
 		margin-top: 70px;
+		margin: 70px auto 0;
+	}
+
+	.quotes-container {
+		column-count: 3;
+		column-gap: 1.3rem;
+	}
+	@media screen and (min-width: 2560px) {
+		.quotes {
+			padding: 0 6rem;
+		}
+		.quotes-container {
+			column-count: 5;
+		}
+	}
+	@media screen and (max-width: 1024px) {
+		.quotes {
+			padding: 0 2rem;
+		}
+		.quotes-container {
+			column-count: 2;
+		}
+	}
+
+	@media screen and (max-width: 425px) {
+		.quotes {
+			padding: 0 0.5rem;
+		}
+		.quotes-container {
+			column-count: 1;
+		}
 	}
 
 	.empty-state {

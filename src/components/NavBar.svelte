@@ -91,8 +91,8 @@
 		justify-content: space-between;
 		align-items: center;
 		background: var(--grey5);
-		padding: 5px 8px;
-		border-radius: 15px;
+		padding: 5px 4px;
+		border-radius: 6px;
 	}
 
 	.tab {
