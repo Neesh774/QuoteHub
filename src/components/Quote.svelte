@@ -8,27 +8,19 @@
 	};
 
 	export let quote: Quote;
-
-	$: formatted = () => {
-		if (quote.quote.startsWith('"') && quote.quote.endsWith('"')) {
-			return quote.quote;
-		} else {
-			return '"' + quote.quote + '"';
-		}
-	};
 </script>
 
 <div class="quote-container">
 	<div class="quote">
 		<h1>
-			{formatted()}
+			{quote.quote}
 		</h1>
 		<div class="details">
 			<cite>-{quote.author}</cite>
 			<div class="details-footer">
 				<span>{new Date(quote.created).toLocaleDateString()}</span>
 				<button class="copy-quote" on:click={() => {
-					navigator.clipboard.writeText(formatted() + "\n- " + quote.author);
+					navigator.clipboard.writeText(quote.quote + "\n- " + quote.author);
 					alert("Copied!");
 				}}>
 					<img src={Copy} alt="Copy Quote" />
