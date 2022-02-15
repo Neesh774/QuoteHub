@@ -1,9 +1,11 @@
 <script>
 	import Favicon from '../assets/favicon.png';
-	export let createQuoteSelected = true;
 	import { goto } from '$app/navigation';
 	import Create from '../assets/create.svg';
 	import Quotes from '../assets/quotes.svg';
+
+	export let createQuoteSelected = true;
+	export let search = '';
 </script>
 
 <nav class="navbar">
@@ -13,7 +15,7 @@
 	</div>
 	{#if !createQuoteSelected}
 		<div class="inputWrap">
-			<input class="search" placeholder="Search..." />
+			<input bind:value={search} class="search" placeholder="Search..." />
 		</div>
 	{/if}
 	<div class="tabs">
@@ -30,7 +32,12 @@
 	</div>
 	<div class="tabs-mobile">
 		{#if !createQuoteSelected}
-			<button class="tab-mobile" id="createQuoteTab" on:click={() => goto('/', { replaceState: true })}>
+			<button
+				class="tab-mobile"
+				id="createQuoteTab"
+				on:click={() => goto('/', { replaceState: true })}
+			>
+				<span>Create</span>
 				<img src={Create} alt="Create" />
 			</button>
 		{:else}
@@ -39,6 +46,7 @@
 				id="viewQuotesTab"
 				on:click={() => goto('/quotes', { replaceState: true })}
 			>
+				<span>View </span>
 				<img src={Quotes} alt="Quotes" />
 			</button>
 		{/if}
@@ -50,7 +58,8 @@
 		background-color: #f2f2f2;
 		height: 50px;
 		width: 100%;
-		top: 5px;
+		position: fixed;
+		top: 10px;
 		left: 0;
 		z-index: 1;
 		display: flex;
@@ -97,9 +106,9 @@
 		color: white;
 		margin: 0 4px;
 	}
-    .tabs-mobile {
-        display: none;
-    }
+	.tabs-mobile {
+		display: none;
+	}
 
 	.tab:hover {
 		background-color: var(--grey4);
@@ -139,38 +148,38 @@
 			display: none;
 		}
 
-        .tabs {
-            display: none;
-        }
+		.tabs {
+			display: none;
+		}
 
-        .tabs-mobile {
-            display: block;
-            fill: white;
-            height: 36px;
-            width: 36px;
-        }
+		.tabs-mobile {
+			display: block;
+			fill: white;
+			height: 36px;
+		}
 
-        .tab-mobile {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 36px;
-            width: 36px;
-            border-radius: 8px;
-            background: var(--grey5);
-            color: white;
-            cursor: pointer;
-            border: none;
-            outline: none;
-        }
+		.tab-mobile {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 36px;
+			border-radius: 8px;
+			background: var(--grey5);
+			color: white;
+			cursor: pointer;
+			border: none;
+			outline: none;
+			padding: 8px;
+		}
 
-        .tab-mobile img {
-            width: 20px;
-            height: 20px;
-        }
+		.tab-mobile img {
+			height: 20px;
+			width: 20px;
+			margin-left: 4px;
+		}
 
-        .navbar {
-            padding: 0 10px;
-        }
+		.navbar {
+			padding: 0 10px;
+		}
 	}
 </style>

@@ -14,18 +14,32 @@
 	import Quote from '../components/Quote.svelte';
 	import EmptyState from '../assets/empty_state.svg';
 	import NavBar from '../components/NavBar.svelte';
+	import { filter } from 'fuzzaldrin';
 
 	export let quotes = [];
+	let search = '';
+
+	$: filtered = (search) => {
+		const filteredQuotes = filter(quotes, search, { key: 'quote' });
+		const filteredAuthors = filter(quotes, search, { key: 'author' });
+		return [...new Set(filteredQuotes.concat(filteredAuthors))];
+	};
 </script>
 
-<NavBar createQuoteSelected={false} />
+<NavBar createQuoteSelected={false} bind:search />
 <div class="container">
 	<div class="quotes">
 		{#if quotes.length > 0}
 			<div class="quotes-container">
-				{#each quotes as quote, id}
-					<Quote {quote} />
-				{/each}
+				{#if filtered(search).length > 0}
+					{#each filtered(search) as quote}
+						<Quote {quote} />
+					{/each}
+				{:else}
+					{#each quotes as quote, id}
+						<Quote {quote} />
+					{/each}
+				{/if}
 			</div>
 		{:else}
 			<div class="empty">
@@ -41,7 +55,6 @@
 
 	body {
 		background: var(--backgroundColor);
-		overflow-y: auto;
 	}
 
 	* {
@@ -70,11 +83,8 @@
 		--grey5: #333;
 		--selectionColor: rgb(109 175 255/0.5);
 	}
-
-	.container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	::webkit-scrollbar-thumb {
+		background: white;
 	}
 
 	.loading {
@@ -83,13 +93,16 @@
 		max-height: 100px;
 	}
 
+	.container {
+		overflow-y: hidden;
+	}
+
 	.quotes {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin: 0 2rem;
+		padding: 0 2rem;
 		max-width: 100%;
 		overflow-y: auto;
+		height: calc(100vh - 70px);
+		margin-top: 70px;
 	}
 
 	.empty-state {
