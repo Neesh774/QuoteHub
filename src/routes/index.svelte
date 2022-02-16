@@ -3,6 +3,11 @@
 	import NavBar from '../components/NavBar.svelte';
 	import { navigating } from '$app/stores';
 	import Loading from '../assets/loading.svg';
+	import splitbee from '@splitbee/web';
+
+	splitbee.init();
+	splitbee.track("Create Quote");
+	splitbee.track("Copy Quote");
 </script>
 
 <NavBar createQuoteSelected={true} />

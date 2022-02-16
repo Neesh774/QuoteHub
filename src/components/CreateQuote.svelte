@@ -62,7 +62,7 @@
 			</div>
 		</div>
 		<div class="submit">
-			<button on:click|preventDefault={submit}>Submit</button>
+			<button data-splitbee-event="Create Quote" on:click|preventDefault={submit}>Submit</button>
 		</div>
 	</form>
 </div>

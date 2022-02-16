@@ -19,7 +19,7 @@
 			<cite>-{quote.author}</cite>
 			<div class="details-footer">
 				<span>{new Date(quote.created).toLocaleDateString()}</span>
-				<button class="copy-quote" on:click={() => {
+				<button class="copy-quote" data-splitbee-event="Copy Quote" on:click={() => {
 					navigator.clipboard.writeText(quote.quote + "\n- " + quote.author);
 					alert("Copied!");
 				}}>
