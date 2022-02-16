@@ -167,6 +167,11 @@
 	}
 
 	@media screen and (max-width: 768px) {
+		.createQuote {
+			width: 100%;
+			margin: 0 auto;
+			padding: 0 12px;
+		}
 		.textAreaWrap {
 			width: 100%;
 		}
