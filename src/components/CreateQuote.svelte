@@ -6,9 +6,9 @@
 	let quote = '';
 
 	async function submit() {
-		const formatted = new Date(date).getMilliseconds;
+		const formatted = new Date(date).toString();
 		const newQuote = {
-			date: formatted,
+			created: formatted,
 			author: author.trim(),
 			quote: quote.trim()
 		};
@@ -17,7 +17,15 @@
 			return;
 		}
 		const { data, error } = await supabase.from('quotes').insert(newQuote);
-		alert('Success!');
+		if (error) {
+			alert('There was an error. Please try again later.');
+			console.log(error)
+		} else {
+			alert('Success!');
+			author = '';
+			quote = '';
+			date = new Date().toLocaleDateString('en-CA');
+		}
 	}
 </script>
 
