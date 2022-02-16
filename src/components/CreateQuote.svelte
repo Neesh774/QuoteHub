@@ -1,11 +1,14 @@
 <script>
 	import { supabase } from '../supabaseClient';
+	import Loading from '../assets/loading_circle.svg';
 
 	let date = new Date().toLocaleDateString('en-CA');
 	let author = '';
 	let quote = '';
+	let loading = false;
 
 	async function submit() {
+		loading = true;
 		const formatted = new Date(date).toString();
 		const newQuote = {
 			created: formatted,
@@ -19,13 +22,14 @@
 		const { data, error } = await supabase.from('quotes').insert(newQuote);
 		if (error) {
 			alert('There was an error. Please try again later.');
-			console.log(error)
+			console.log(error);
 		} else {
 			alert('Success!');
 			author = '';
 			quote = '';
 			date = new Date().toLocaleDateString('en-CA');
 		}
+		loading = false;
 	}
 </script>
 
@@ -62,7 +66,17 @@
 			</div>
 		</div>
 		<div class="submit">
-			<button data-splitbee-event="Create Quote" on:click|preventDefault={submit}>Submit</button>
+			<button
+				disabled={loading}
+				data-splitbee-event="Create Quote"
+				on:click|preventDefault={submit}
+			>
+				{#if loading}
+					<img src={Loading} alt="Loading..." class="loading" />
+				{:else}
+					Submit
+				{/if}
+			</button>
 		</div>
 	</form>
 </div>
@@ -99,6 +113,10 @@
 		justify-content: flex-start;
 		margin-bottom: 2px;
 		font-family: var(--default-font);
+	}
+
+	.loading {
+		width: 20px;
 	}
 
 	label {
@@ -172,6 +190,11 @@
 		align-items: center;
 		white-space: nowrap;
 		cursor: pointer;
+	}
+
+	.submit button:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
 	}
 
 	@media screen and (max-width: 768px) {
