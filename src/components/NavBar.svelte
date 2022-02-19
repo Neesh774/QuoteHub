@@ -1,50 +1,62 @@
 <script>
 	import Favicon from '../assets/favicon.png';
+	import Sparkles from '../assets/sparkles.svg';
 	import { goto } from '$app/navigation';
 	import Create from '../assets/create.svg';
 	import Quotes from '../assets/quotes.svg';
 
-	export let createQuoteSelected = true;
+	export let selected = 0;
 	export let search = '';
 </script>
 
 <nav class="navbar">
 	<div class="brand">
-		<img src={Favicon} alt="Favicon" />
+		{#if selected == 0}
+			<img src={Favicon} alt="Favicon" />
+		{:else if selected == 2}
+			<img class="brand-logo-icon" src={Sparkles} alt="Sparkles" />
+		{:else}
+			<img class="brand-logo-icon" src={Quotes} alt="Quotes" />
+		{/if}
 		<h1>QuoteHub</h1>
 	</div>
-	{#if !createQuoteSelected}
+	{#if selected == 1}
 		<div class="inputWrap">
 			<input bind:value={search} class="search" placeholder="Search..." />
 		</div>
 	{/if}
 	<div class="tabs">
 		<button
-			class={`tab ${createQuoteSelected ? 'selected' : ''}`}
+			class={`tab ${selected == 0 ? 'selected' : ''}`}
 			id="createQuoteTab"
-			on:click={() => goto('/', { replaceState: true })}>Create</button
+			on:click={() => goto('/', { noscroll: true })}
 		>
+			Create
+		</button>
 		<button
-			class={`tab ${!createQuoteSelected ? 'selected' : ''}`}
+			class={`tab ${selected == 1 ? 'selected' : ''}`}
 			id="viewQuotesTab"
-			on:click={() => goto('/quotes', { replaceState: true })}>View</button
-		>
+			on:click={() => goto('/quotes', { noscroll: true })}
+			>View
+		</button>
+		<button
+			class={`tab ${selected == 2 ? 'selected' : ''}`}
+			id="styleQuoteTab"
+			on:click={() => goto('/style/n', { noscroll: true })}
+			>Style
+		</button>
 	</div>
 	<div class="tabs-mobile">
-		{#if !createQuoteSelected}
-			<button
-				class="tab-mobile"
-				id="createQuoteTab"
-				on:click={() => goto('/', { replaceState: true })}
-			>
+		{#if selected == 1 || selected == 2}
+			<button class="tab-mobile" id="createQuoteTab" on:click={() => goto('/', { noscroll: true })}>
 				<span>Create</span>
 				<img src={Create} alt="Create" />
 			</button>
-		{:else}
+		{:else if selected == 0}
 			<button
 				class="tab-mobile"
 				id="viewQuotesTab"
-				on:click={() => goto('/quotes', { replaceState: true })}
+				on:click={() => goto('/quotes', { noscroll: true })}
 			>
 				<span>View </span>
 				<img src={Quotes} alt="Quotes" />
@@ -55,17 +67,13 @@
 
 <style>
 	.navbar {
-		background-color: #f2f2f2;
 		height: 50px;
 		width: 100%;
-		position: fixed;
-		top: 10px;
-		left: 0;
 		z-index: 1;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		background: transparent;
+		background: var(--backgroundColor);
 		padding: 0 20px;
 	}
 
@@ -79,6 +87,12 @@
 		height: 40px;
 		width: 40px;
 		margin-right: 10px;
+	}
+
+	.brand .brand-logo-icon {
+		border-radius: 8px;
+		background-color: var(--inputBackgroundActiveColor);
+		padding: 8px;
 	}
 
 	h1 {

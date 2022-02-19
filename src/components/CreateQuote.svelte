@@ -1,11 +1,14 @@
 <script>
 	import { supabase } from '../supabaseClient';
 	import Loading from '../assets/loading_circle.svg';
+	import StyleQuoteButton from './StyleQuoteButton.svelte';
 
-	let date = new Date().toLocaleDateString('en-CA');
-	let author = '';
-	let quote = '';
+	export let dateString = new Date().toLocaleDateString('en-CA');
+	$: date = new Date(dateString);
+	export let author = '';
+	export let quote = '';
 	let loading = false;
+	export let showButtons = true;
 
 	async function submit() {
 		loading = true;
@@ -15,8 +18,9 @@
 			author: author.trim(),
 			quote: quote.trim()
 		};
-		if (date.length < 1 || author.length < 1 || quote.length < 1) {
+		if (formatted.length < 1 || author.length < 1 || quote.length < 1) {
 			alert('Please fill out all fields');
+			loading = false;
 			return;
 		}
 		const { data, error } = await supabase.from('quotes').insert(newQuote);
@@ -27,7 +31,7 @@
 			alert('Success!');
 			author = '';
 			quote = '';
-			date = new Date().toLocaleDateString('en-CA');
+			date = new Date();
 		}
 		loading = false;
 	}
@@ -37,7 +41,7 @@
 	<form>
 		<div class="input">
 			<div class="label">
-				<label for="textarea">Quote</label>
+				<label for="Quote">Quote</label>
 			</div>
 			<div class="textAreaWrap quote">
 				<textarea
@@ -50,34 +54,37 @@
 		<div class="details">
 			<div class="input">
 				<div class="label">
-					<label for=".calendar">Date</label>
+					<label for="Date">Date</label>
 				</div>
 				<div class="calendar">
-					<input type="date" bind:value={date} />
+					<input type="date" bind:value={dateString} />
 				</div>
 			</div>
 			<div class="input">
 				<div class="label">
-					<label for=".author">Quotee</label>
+					<label for="author">Quotee</label>
 				</div>
 				<div class="inputWrap author">
 					<input maxlength={30} bind:value={author} placeholder="Michael Scott" />
 				</div>
 			</div>
 		</div>
-		<div class="submit">
-			<button
-				disabled={loading}
-				data-splitbee-event="Create Quote"
-				on:click|preventDefault={submit}
-			>
-				{#if loading}
-					<img src={Loading} alt="Loading..." class="loading" />
-				{:else}
-					Submit
-				{/if}
-			</button>
-		</div>
+		{#if showButtons}
+			<div class="submit">
+				<StyleQuoteButton id={'n'} />
+				<button
+					disabled={loading}
+					data-splitbee-event="Create Quote"
+					on:click|preventDefault={submit}
+				>
+					{#if loading}
+						<img src={Loading} alt="Loading..." class="loading" />
+					{:else}
+						Submit
+					{/if}
+				</button>
+			</div>
+		{/if}
 	</form>
 </div>
 
@@ -93,7 +100,6 @@
 		border-radius: 8px;
 		background-color: var(--inputBackgroundColor);
 		min-height: 104px;
-		width: 500px;
 	}
 
 	.inputWrap {
@@ -210,10 +216,7 @@
 			flex-direction: column;
 		}
 		.calendar {
-			margin-top: 12px;
-		}
-		.inputWrap {
-			margin-top: 12px;
+			margin-bottom: 12px;
 		}
 		.submit {
 			margin-top: 12px;

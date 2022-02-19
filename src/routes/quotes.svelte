@@ -26,7 +26,7 @@
 	};
 </script>
 
-<NavBar createQuoteSelected={false} bind:search />
+<NavBar selected={1} bind:search />
 <div class="container">
 	<div class="quotes">
 		{#if quotes.length > 0}
@@ -57,12 +57,6 @@
 		background: var(--backgroundColor);
 	}
 
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
 	:root {
 		--type-size: 14px;
 		--secondary-type-size: 12px;
@@ -82,9 +76,13 @@
 		--grey4: #444;
 		--grey5: #333;
 		--selectionColor: rgb(109 175 255/0.5);
+		--content-padding: 16px;
 	}
-	::webkit-scrollbar-thumb {
-		background: white;
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
 	}
 
 	.loading {
@@ -102,8 +100,6 @@
 		max-width: 100%;
 		overflow-y: auto;
 		height: calc(100vh - 70px);
-		margin-top: 70px;
-		margin: 70px auto 0;
 	}
 
 	.quotes-container {
