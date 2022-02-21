@@ -62,6 +62,17 @@
 
 	let width = 400;
 	let height = 200;
+
+	let canvasContext: CanvasRenderingContext2D;
+
+	$: exportQuote = () => {
+		// export canvasContext as image
+		let dataURL = canvasContext.canvas.toDataURL();
+		let a = document.createElement('a');
+		a.href = dataURL;
+		a.download = 'quote.png';
+		a.click();
+	}
 </script>
 
 <NavBar selected={2} />
@@ -96,7 +107,19 @@
 					font={selectedFont}
 					{width}
 					{height}
+					bind:canvasContext
 				/>
+			</div>
+		</section>
+		<section>
+			<h2>Export</h2>
+			<div class="export-options">
+				<button class="twitter">
+					Export to Twitter
+				</button>
+				<button class="export" on:click={exportQuote}>
+					Export As PNG
+				</button>
 			</div>
 		</section>
 	</div>
@@ -198,5 +221,35 @@
 		.colors > div {
 			margin: 0 12px;
 		}
+	}
+
+	.export-options {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.export-options button {
+		background-color: var(--inputBackgroundColor);
+		border: none;
+		outline: none;
+		height: 32px;
+		line-height: 32px;
+		padding: 0 12px;
+		font-weight: 500;
+		font-family: var(--default-font);
+		color: var(--grey1);
+		border-radius: 8px;
+		font-size: var(--type-size);
+		position: relative;
+		display: flex;
+		align-items: center;
+		white-space: nowrap;
+		cursor: pointer;
+		margin-right: 12px;
+	}
+	.twitter {
+		background-color: #1DA1F2 !important;
 	}
 </style>

@@ -1,7 +1,6 @@
 <script>
 	import { textColorOptions, bgColorOptions } from '../assets/options.json';
-	import { onMount } from 'svelte';
-	import { Canvas, Layer, t } from 'svelte-canvas';
+	import { Canvas, Layer } from 'svelte-canvas';
 	import '../fonts.css';
 	import canvasTxt from 'canvas-txt';
 
@@ -18,30 +17,48 @@
 	export let width;
 	export let height;
 
+	export let canvasContext = null;
+
 	$: render = ({ context, width, height }) => {
+		canvasContext = context;
 		//fill background with bgColor
 		context.fillStyle = bgColor;
 		context.fillRect(0, 0, width, height);
 		//draw quote
 		context.fillStyle = pColor;
-		context.font = `bold 16px ${font}`;
-		context.textAlign = 'center';
-		context.textBaseline = 'middle';
-		context.fillText(quote, width / 2, height / 2);
+		//responsive font size
+		let fontSize = Math.min(width, height) / 130;
+		canvasTxt.fontSize = fontSize * 12;
+		canvasTxt.fontWeight = 'bold';
+		canvasTxt.font = font;
+		canvasTxt.lineHeight = fontSize * 12;
+		canvasTxt.drawText(context, quote, 20, 10, width - 40, height - 40);
 		//draw date
 		context.fillStyle = sColor;
-		context.font = `italic 12px ${font}`;
-		context.textAlign = 'right';
-		context.fillText(
+		canvasTxt.fontSize = fontSize * 8;
+		canvasTxt.fontWeight = 'italic';
+		canvasTxt.align = 'right';
+		canvasTxt.drawText(
+			context,
 			quote.length > 0 ? new Date(date).toLocaleDateString('en-CA') : '',
-			width - 60,
-			height / 2 + 40
+		    width - fontSize * 55,
+			0.8 * height,
+			fontSize * 50,
+			fontSize * 18
 		);
 		//draw author
 		context.fillStyle = sColor;
-		context.font = `italic 13px ${font}`;
-		context.textAlign = 'right';
-		context.fillText(author.length > 0 ? '- ' + author : '', width - 60, height / 2 + 20);
+		canvasTxt.fontSize = fontSize * 8;
+		canvasTxt.fontWeight = 'italic';
+		canvasTxt.drawText(
+			context,
+			author.length > 0 ? '- ' + author : '',
+			width - fontSize * 55,
+			0.8 * height - fontSize * 10,
+			fontSize * 50,
+			fontSize * 18
+		);
+		canvasTxt.align = 'center';
 	};
 </script>
 
@@ -51,12 +68,11 @@
 	</Canvas>
 </div>
 
-
 <style>
-    .canvas-container {
-        border-radius: 8px;
-        margin: auto;
-        display: flex;
-        overflow-x: auto;
-    }
+	.canvas-container {
+		border-radius: 8px;
+		margin: auto;
+		display: flex;
+		overflow-x: auto;
+	}
 </style>
