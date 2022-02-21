@@ -59,6 +59,7 @@
 	let backgroundColorIndex = 1;
 
 	let selectedFont = 'Inter';
+	let fontSize = 16;
 
 	let width = 400;
 	let height = 200;
@@ -67,12 +68,17 @@
 
 	$: exportQuote = () => {
 		// export canvasContext as image
-		let dataURL = canvasContext.canvas.toDataURL();
+		let dataURL = canvasContext.canvas.toDataURL('image/png');
 		let a = document.createElement('a');
 		a.href = dataURL;
 		a.download = 'quote.png';
 		a.click();
-	}
+	};
+
+	$: copyImageToClipboard = async () => {
+		canvasContext.canvas.toBlob(async blob => await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]), 'image/png');
+		alert('Copied!');
+	};
 </script>
 
 <NavBar selected={2} />
@@ -89,7 +95,7 @@
 					<ColorPicker title="Primary Text Color" bind:colorIndex={pTextColorIndex} />
 					<ColorPicker title="Secondary Text Color" bind:colorIndex={sTextColorIndex} />
 					<ColorPicker title="Background Color" bind:colorIndex={backgroundColorIndex} type="bg" />
-					<FontPicker bind:selectedFont />
+					<FontPicker bind:fontSize bind:selectedFont />
 					<SizePicker bind:width bind:height />
 				</div>
 			</div>
@@ -105,6 +111,7 @@
 					sColorIndex={sTextColorIndex}
 					bgColorIndex={backgroundColorIndex}
 					font={selectedFont}
+					{fontSize}
 					{width}
 					{height}
 					bind:canvasContext
@@ -114,12 +121,8 @@
 		<section>
 			<h2>Export</h2>
 			<div class="export-options">
-				<button class="twitter">
-					Export to Twitter
-				</button>
-				<button class="export" on:click={exportQuote}>
-					Export As PNG
-				</button>
+				<button class="export" on:click={copyImageToClipboard}> Copy </button>
+				<button class="export" on:click={exportQuote}> Export As PNG </button>
 			</div>
 		</section>
 	</div>
@@ -250,6 +253,6 @@
 		margin-right: 12px;
 	}
 	.twitter {
-		background-color: #1DA1F2 !important;
+		background-color: #1da1f2 !important;
 	}
 </style>

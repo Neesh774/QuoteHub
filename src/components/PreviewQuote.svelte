@@ -14,6 +14,7 @@
 	export let bgColorIndex;
 	$: bgColor = bgColorOptions[bgColorIndex].color;
 	export let font;
+    export let fontSize;
 	export let width;
 	export let height;
 
@@ -24,39 +25,39 @@
 		//fill background with bgColor
 		context.fillStyle = bgColor;
 		context.fillRect(0, 0, width, height);
-		//draw quote
+
+		// QUOTE
 		context.fillStyle = pColor;
-		//responsive font size
-		let fontSize = Math.min(width, height) / 130;
-		canvasTxt.fontSize = fontSize * 12;
+		canvasTxt.fontSize = fontSize;
 		canvasTxt.fontWeight = 'bold';
 		canvasTxt.font = font;
-		canvasTxt.lineHeight = fontSize * 12;
 		canvasTxt.drawText(context, quote, 20, 10, width - 40, height - 40);
-		//draw date
+
+		// DATE
 		context.fillStyle = sColor;
-		canvasTxt.fontSize = fontSize * 8;
+		canvasTxt.fontSize = fontSize * 0.9;
 		canvasTxt.fontWeight = 'italic';
 		canvasTxt.align = 'right';
 		canvasTxt.drawText(
 			context,
 			quote.length > 0 ? new Date(date).toLocaleDateString('en-CA') : '',
-		    width - fontSize * 55,
+		    width - fontSize - fontSize * 10,
 			0.8 * height,
-			fontSize * 50,
-			fontSize * 18
+			fontSize * 10,
+			fontSize
 		);
-		//draw author
+
+		// AUTHOR
 		context.fillStyle = sColor;
-		canvasTxt.fontSize = fontSize * 8;
+		canvasTxt.fontSize = fontSize * 0.9;
 		canvasTxt.fontWeight = 'italic';
 		canvasTxt.drawText(
 			context,
 			author.length > 0 ? '- ' + author : '',
-			width - fontSize * 55,
-			0.8 * height - fontSize * 10,
-			fontSize * 50,
-			fontSize * 18
+			width - fontSize - fontSize * 10,
+			0.8 * height - fontSize,
+			fontSize * 10,
+			fontSize
 		);
 		canvasTxt.align = 'center';
 	};
