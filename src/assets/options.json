@@ -1,0 +1,55 @@
+{
+	"textColorOptions": [
+		{
+			"color": "#aaaaaa",
+			"colorName": "light_gray"
+		},
+		{
+			"color": "#777777",
+			"colorName": "gray"
+		},
+		{
+			"color": "#FF6464",
+			"colorName": "red"
+		},
+		{
+			"color": "#FFB864",
+			"colorName": "orange"
+		},
+		{
+			"color": "#50B450",
+			"colorName": "green"
+		},
+		{
+			"color": "#4F72E6",
+			"colorName": "blue"
+		}
+	],
+	"bgColorOptions": [
+		{
+			"color": "#f5fbef",
+			"colorName": "white"
+		},
+		{
+			"color": "#333333",
+			"colorName": "black"
+		},
+		{
+			"color": "#a23e48",
+			"colorName": "purple"
+		},
+		{
+			"color": "#ffcb77",
+			"colorName": "peach"
+		},
+		{
+			"color": "#5b9279",
+			"colorName": "green"
+		},
+		{
+			"color": "#084c61",
+			"colorName": "blue"
+		}
+	],
+	"fontOptions": ["Inter", "Montserrat", "Open Sans", "Poppins", "Rubik", "Roboto"]
+}

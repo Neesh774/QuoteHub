@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Copy from '../assets/copy.svg';
+	import StyleQuoteButton from './StyleQuoteButton.svelte';
 
 	type Quote = {
+		id: string,
 		author: string;
 		quote: string;
 		created: string;
@@ -19,12 +21,22 @@
 			<cite>-{quote.author}</cite>
 			<div class="details-footer">
 				<span>{new Date(quote.created).toLocaleDateString()}</span>
-				<button class="copy-quote" data-splitbee-event="Copy Quote" on:click={() => {
-					navigator.clipboard.writeText(quote.quote + "\n- " + quote.author);
-					alert("Copied!");
-				}}>
-					<img src={Copy} alt="Copy Quote" />
-				</button>
+				<div class="actions">
+					<StyleQuoteButton
+						showText={false}
+						id={quote.id}
+					/>
+					<button
+						class="copy-quote"
+						data-splitbee-event="Copy Quote"
+						on:click={() => {
+							navigator.clipboard.writeText(quote.quote + '\n- ' + quote.author);
+							alert('Copied!');
+						}}
+					>
+						<img src={Copy} alt="Copy Quote" />
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -87,6 +99,11 @@
 		border: none;
 		color: white;
 		cursor: pointer;
+	}
+
+	.actions {
+		display: flex;
+		align-items: center;
 	}
 
 	@media screen and (max-width: 600px) {

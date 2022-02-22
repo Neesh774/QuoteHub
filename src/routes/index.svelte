@@ -6,17 +6,19 @@
 	import splitbee from '@splitbee/web';
 
 	splitbee.init();
-	splitbee.track("Create Quote");
-	splitbee.track("Copy Quote");
+	splitbee.track('Create Quote');
+	splitbee.track('Copy Quote');
 </script>
 
-<NavBar createQuoteSelected={true} />
+<NavBar selected={0} />
 <div class="container">
-	{#if $navigating}
-		<img src={Loading} class="loading" alt="loading" />
-	{:else}
-		<CreateQuote />
-	{/if}
+	<div class={`wrapper ${$navigating ? 'loading' : ''}`}>
+		{#if $navigating}
+			<img src={Loading} class="loading" alt="loading" />
+		{:else}
+			<CreateQuote />
+		{/if}
+	</div>
 </div>
 
 <style global>
@@ -30,6 +32,7 @@
 		padding: 0;
 		display: flex;
 		flex: 1 1 auto;
+		flex-direction: column;
 	}
 
 	* {
@@ -57,6 +60,7 @@
 		--grey4: #444;
 		--grey5: #333;
 		--selectionColor: rgb(109 175 255/0.5);
+		--content-padding: 16px;
 	}
 
 	.container {
@@ -68,8 +72,22 @@
 	}
 
 	.loading {
-		margin: 0 auto;
 		max-width: 100px;
 		max-height: 100px;
+	}
+
+	.wrapper {
+		max-width: 540px;
+		margin: 0 auto;
+		padding: var(--content-padding) 0;
+		grid-row-start: 1;
+		grid-column-start: 1;
+		width: 100%;
+	}
+
+	.wrapper.loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
