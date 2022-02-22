@@ -135,7 +135,6 @@
 		background-color: var(--backgroundColor) !important;
 		height: initial !important;
 		width: initial !important;
-		display: initial !important;
 	}
 
 	* {
