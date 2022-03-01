@@ -81,6 +81,7 @@
 		margin-bottom: 12px;
 		font-size: 18px;
 		font-weight: bold;
+		text-overflow: ellipsis;
 	}
 
 	span {

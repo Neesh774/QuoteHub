@@ -12,11 +12,11 @@
 <nav class="navbar">
 	<div class="brand">
 		{#if selected == 3}
-			<img class="brand-logo-icon" src={Quotes} alt="Quotes" />
+			<img class="brand-logo-icon" src={Quotes} alt="Quotes" on:click={() => goto('/')} />
 		{:else if selected == 2}
-			<img class="brand-logo-icon" src={Sparkles} alt="Sparkles" />
+			<img class="brand-logo-icon" src={Sparkles} alt="Sparkles" on:click={() => goto('/')} />
 		{:else}
-			<img src={Favicon} alt="Favicon" />
+			<img src={Favicon} alt="Favicon" on:click={() => goto('/')} />
 		{/if}
 		<h1>QuoteHub</h1>
 	</div>

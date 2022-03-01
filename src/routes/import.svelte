@@ -141,6 +141,16 @@
 		margin: 0 auto 4rem;
 	}
 
+	.container {
+		flex-direction: column;
+	}
+
+	@media screen and (max-width: 768px) {
+		.content {
+			max-width: 90%;
+		}
+	}
+
 	.quotes {
 		padding: 0 4rem;
 		max-width: 100%;
