@@ -11,12 +11,12 @@
 
 <nav class="navbar">
 	<div class="brand">
-		{#if selected == 0}
-			<img src={Favicon} alt="Favicon" />
+		{#if selected == 3}
+			<img class="brand-logo-icon" src={Quotes} alt="Quotes" />
 		{:else if selected == 2}
 			<img class="brand-logo-icon" src={Sparkles} alt="Sparkles" />
 		{:else}
-			<img class="brand-logo-icon" src={Quotes} alt="Quotes" />
+			<img src={Favicon} alt="Favicon" />
 		{/if}
 		<h1>QuoteHub</h1>
 	</div>
@@ -26,25 +26,11 @@
 		</div>
 	{/if}
 	<div class="tabs">
-		<button
-			class={`tab ${selected == 0 ? 'selected' : ''}`}
-			id="createQuoteTab"
-			on:click={() => goto('/', { noscroll: true })}
-		>
-			Create
-		</button>
-		<button
-			class={`tab ${selected == 1 ? 'selected' : ''}`}
-			id="viewQuotesTab"
-			on:click={() => goto('/quotes', { noscroll: true })}
-			>View
-		</button>
-		<button
-			class={`tab ${selected == 2 ? 'selected' : ''}`}
-			id="styleQuoteTab"
-			on:click={() => goto('/style/n', { noscroll: true })}
+		<a class={`tab ${selected == 0 ? 'selected' : ''}`} id="createQuoteTab" href="/"> Create </a>
+		<a class={`tab ${selected == 1 ? 'selected' : ''}`} id="viewQuotesTab" href="/quotes">View </a>
+		<a class={`tab ${selected == 2 ? 'selected' : ''}`} id="styleQuoteTab" href="/style/n"
 			>Style
-		</button>
+		</a>
 	</div>
 	<div class="tabs-mobile">
 		{#if selected == 1 || selected == 2}
@@ -119,6 +105,8 @@
 		background-color: transparent;
 		color: white;
 		margin: 0 4px;
+		text-decoration: none;
+		font-size: 14px;
 	}
 	.tabs-mobile {
 		display: none;

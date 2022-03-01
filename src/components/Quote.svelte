@@ -3,7 +3,7 @@
 	import StyleQuoteButton from './StyleQuoteButton.svelte';
 
 	type Quote = {
-		id: string,
+		id: string;
 		author: string;
 		quote: string;
 		created: string;
@@ -22,10 +22,7 @@
 			<div class="details-footer">
 				<span>{new Date(quote.created).toLocaleDateString()}</span>
 				<div class="actions">
-					<StyleQuoteButton
-						showText={false}
-						id={quote.id}
-					/>
+					<StyleQuoteButton showText={false} id={quote.id} />
 					<button
 						class="copy-quote"
 						data-splitbee-event="Copy Quote"

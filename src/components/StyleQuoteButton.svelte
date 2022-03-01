@@ -1,21 +1,21 @@
 <script lang="ts">
 	import Sparkles from '../assets/sparkles.svg';
-  import { goto } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
-  export let id: string = '';
+	export let id: string = 'n';
 
-  export let showText = true;
+	export let showText = true;
 </script>
 
-<button on:click|preventDefault={() => goto(`/style/${id}`, { replaceState: true })}>
+<a href={`/style/${id}`}>
 	<img src={Sparkles} alt="Sparkles" />
 	{#if showText}
-    <span>Style</span>
-  {/if}
-</button>
+		<span>Style</span>
+	{/if}
+</a>
 
 <style>
-	button {
+	a {
 		background-color: var(--inputBackgroundColor);
 		border: none;
 		outline: none;
@@ -33,9 +33,10 @@
 		white-space: nowrap;
 		cursor: pointer;
 		margin-right: 8px;
+		text-decoration: none;
 	}
 
-	button img {
+	a img {
 		margin-right: 0px;
 		width: 20px;
 		height: 20px;
