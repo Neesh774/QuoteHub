@@ -3,47 +3,88 @@
 	import NavBar from '../components/NavBar.svelte';
 	import { supabase } from '../supabaseClient';
 	import Loading from '../assets/loading_circle.svg';
+	import JSONFilePicker from '../components/JSONFilePicker.svelte';
+	import JSONTextArea from '../components/JSONTextArea.svelte';
 
 	let loading = false;
 
-	export let data;
+	let data;
+	$: parsed = data
+		? data.map((q) => ({
+				quote: q.text,
+				author: q.author,
+				created: q.editedTimestamp ?? q.createdTimestamp
+		  }))
+		: [];
 
 	function submit() {
 		loading = true;
 		supabase
 			.from('quotes')
-			.insert(data)
+			.insert(parsed)
 			.then(() => {
-				alert(`Saved ${data.length} quotes`);
+				alert(`Saved ${parsed.length} quotes`);
 				window.location.href = '/';
 			});
 		loading = false;
 	}
+
+	let selectedInputForm = 0;
 </script>
 
 <div class="container">
 	<NavBar selected={-1} />
 	<div class="content">
-		<h2>Import</h2>
-		<div class="quotes">
-			{#each data as quote, i}
-				<Quote {quote} />
-			{/each}
-		</div>
-		<div class="buttons">
-			<a href="/">Cancel</a>
-			<button
-				disabled={loading}
-				data-splitbee-event="Create Quote"
-				on:click|preventDefault={submit}
-			>
-				{#if loading}
-					<img src={Loading} alt="Loading..." class="loading" />
-				{:else}
-					Submit
+		<section>
+			<h2>Import</h2>
+			<div class="tabWrapper">
+				<div class="import-tabs">
+					<button
+						on:click={() => (selectedInputForm = 0)}
+						class={`import-tab ${selectedInputForm == 0 ? 'selected' : ''}`}
+					>
+						Upload
+					</button>
+					<button
+						on:click={() => (selectedInputForm = 1)}
+						class={`import-tab ${selectedInputForm == 1 ? 'selected' : ''}`}
+					>
+						JSON
+					</button>
+				</div>
+			</div>
+			<div class="tabContent">
+				{#if selectedInputForm == 0}
+					<JSONFilePicker bind:json={data} />
+				{:else if selectedInputForm == 1}
+					<JSONTextArea bind:json={data} />
 				{/if}
-			</button>
-		</div>
+			</div>
+		</section>
+		{#if data && data.length > 0}
+			<section>
+				<h2>Preview</h2>
+				<div class="quotes">
+					{#each parsed as quote, i}
+						<Quote {quote} />
+					{/each}
+				</div>
+				<div class="buttons">
+					<a href="/">Cancel</a>
+					<button
+						disabled={loading}
+						data-splitbee-event="Create Quote"
+						on:click|preventDefault={submit}
+					>
+						{#if loading}
+							<img src={Loading} alt="Loading..." class="loading" />
+						{:else}
+							Submit
+						{/if}
+					</button>
+				</div>
+			</section>
+		{/if}
 	</div>
 </div>
 
@@ -193,5 +234,47 @@
 		white-space: nowrap;
 		cursor: pointer;
 		margin: 0 8px;
+	}
+
+	.tabWrapper {
+		display: flex;
+		justify-content: center;
+		margin-top: 16px;
+	}
+	.import-tabs {
+		margin: auto;
+		background: var(--grey5);
+		padding: 5px 4px;
+		border-radius: 6px;
+	}
+
+	.import-tab {
+		font-family: var(--default-font);
+		padding: 6px;
+		border-radius: 5px;
+		cursor: pointer;
+		border: none;
+		outline: none;
+		background-color: transparent;
+		color: white;
+		margin: 0 4px;
+		text-decoration: none;
+		font-size: 14px;
+	}
+
+	.tabContent {
+		display: flex;
+		margin: auto;
+		justify-content: center;
+		align-items: center;
+		min-height: calc(4rem);
+	}
+
+	.tab:hover {
+		background-color: var(--grey4);
+	}
+
+	.selected {
+		background-color: var(--grey4);
 	}
 </style>
