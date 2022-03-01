@@ -31,6 +31,7 @@
 		white-space: nowrap;
 		cursor: pointer;
 		margin: 0 8px;
+		width: 108px;
 	}
 	input::-webkit-file-upload-button {
 		visibility: hidden;

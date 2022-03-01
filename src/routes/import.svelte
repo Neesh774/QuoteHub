@@ -49,7 +49,7 @@
 						on:click={() => (selectedInputForm = 1)}
 						class={`import-tab ${selectedInputForm == 1 ? 'selected' : ''}`}
 					>
-						JSON
+						Paste
 					</button>
 				</div>
 			</div>
